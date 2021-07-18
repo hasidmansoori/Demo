@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <TextView
+        android:id="@+id/textLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="LOGIN"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:textColor="#000"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="200dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="20dp"
+
+       />
+    <TextView
+        android:id="@+id/textHost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textLogin"
+        android:layout_marginTop="10dp"
+        android:text="Host/Attend Parties"
+        android:textColor="#6c757d"
+        android:textSize="17sp"
+        app:layout_constraintTop_toBottomOf="@id/textLogin"
+        android:layout_marginLeft="20dp"/>
+    <RelativeLayout
+        android:id="@+id/relativeRequestOTP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/textHost"
+        app:layout_constraintLeft_toLeftOf="parent"
+        >
+
+    <EditText
+        android:id="@+id/editMobileNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background"
+        android:layout_margin="20dp"
+        android:textSize="18sp"
+        android:inputType="number"
+        android:padding="10dp"
+        android:hint="Enter Mobile Number"
+        />
+    <Button
+        android:id="@+id/btnOtp"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_below="@id/editMobileNumber"
+        android:layout_marginTop="10dp"
+        android:text="Request OTP"
+        android:layout_marginLeft="30dp"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/relativeVerify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/textHost"
+        app:layout_constraintLeft_toLeftOf="parent">
+        <EditText
+            android:id="@+id/editOTP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background"
+            android:layout_margin="20dp"
+            android:textSize="18sp"
+            android:inputType="number"
+            android:padding="10dp"
+            android:hint="Enter OTP"
+            />
+
+    <!--button for verifying user OTP-->
+        <Button
+            android:id="@+id/btnVerify"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_below="@id/editOTP"
+            android:layout_marginTop="10dp"
+            android:text="Verify OTP"
+            android:layout_marginLeft="30dp"/>
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
