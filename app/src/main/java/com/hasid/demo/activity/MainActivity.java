@@ -1,10 +1,14 @@
-package com.hasid.demo;
+package com.hasid.demo.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.app.Application;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +28,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.hasid.demo.R;
+import com.hasid.demo.databinding.ActivityMainBinding;
+import com.hasid.demo.model.Login;
 
 import java.util.concurrent.TimeUnit;
 
@@ -32,16 +39,14 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private String mVerificationId;
-    private EditText editMobileNumber,editOTP;
-    private Button btnOtp,btnVerify;
-    private RelativeLayout relativeRequestOTP,relativeVerify;
+    private Login login;
+    ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        bind();
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        login=new Login();
         mAuth = FirebaseAuth.getInstance();
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
@@ -80,34 +85,37 @@ public class MainActivity extends AppCompatActivity {
                 // now need to ask the user to enter the code and then construct a credential
                 // by combining the code with a verification ID.
                 Log.d(TAG, "onCodeSent:" + verificationId);
-                relativeRequestOTP.setVisibility(View.INVISIBLE);
-                relativeVerify.setVisibility(View.VISIBLE);
+                binding.relativeRequestOTP.setVisibility(View.INVISIBLE);
+                binding.relativeVerify.setVisibility(View.VISIBLE);
                 // Save verification ID and resending token so we can use them later
                 mVerificationId = verificationId;
             }
         };
-        btnOtp.setOnClickListener(new View.OnClickListener() {
+        SpannableString content = new SpannableString(binding.textRegister.getText().toString());
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        binding.textRegister.setText(content);
+        binding.btnOtp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startPhoneNumberVerification(editMobileNumber.getText().toString());
+                startPhoneNumberVerification(binding.editMobileNumber.getText().toString());
             }
         });
-        btnVerify.setOnClickListener(new View.OnClickListener() {
+        binding.btnVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                verifyPhoneNumberWithCode(editOTP.getText().toString());
+                verifyPhoneNumberWithCode(binding.editOTP.getText().toString());
+            }
+        });
+        binding.textRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this,Register.class);
+                startActivity(i);
             }
         });
     }
 
-    private void bind() {
-        editMobileNumber=findViewById(R.id.editMobileNumber);
-        relativeRequestOTP=findViewById(R.id.relativeRequestOTP);
-        relativeVerify=findViewById(R.id.relativeVerify);
-        editOTP=findViewById(R.id.editOTP);
-        btnVerify=findViewById(R.id.btnVerify);
-        btnOtp=findViewById(R.id.btnOtp);
-    }
+
 
     private void startPhoneNumberVerification(String phoneNumber) {
         phoneNumber="+91"+phoneNumber;
@@ -138,9 +146,9 @@ public class MainActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
 
                             FirebaseUser user = task.getResult().getUser();
-                            editMobileNumber.setText("");
-                            relativeVerify.setVisibility(View.INVISIBLE);
-                            relativeRequestOTP.setVisibility(View.VISIBLE);
+                            binding.editMobileNumber.setText("");
+                            binding.relativeVerify.setVisibility(View.INVISIBLE);
+                            binding.relativeRequestOTP.setVisibility(View.VISIBLE);
                             Toast.makeText(getApplicationContext(),"Verification Succesfull",Toast.LENGTH_LONG).show();
                             // Update UI
                         } else {

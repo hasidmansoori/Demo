@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Demo</string>
+    <string name="textLogin">LOGIN</string>
+    <string name="textHost">Host/Attend Parties</string>
+    <string name="enterMobileNumber">Enter Mobile Number</string>
+    <string name="requestOtp">Request OTP</string>
+    <string name="enterOtp">Enter OTP</string>
+    <string name="verifyOtp">Verify OTP</string>
+    <string name="fname">Enter First Name</string>
+    <string name="lname">Enter Last Name</string>
+    <string name="email">Enter Email</string>
+    <string name="sGender">Select Gender</string>
+    <string name="sAddress">Select Address</string>
+    <string name="profileDetail">Enter Profile Details</string>
+    <string name="Description">Description</string>
 </resources>
